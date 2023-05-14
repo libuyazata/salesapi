@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html th:lang="${#locale.language}" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<!--
+<body style="background-color: #000000;margin-left:15%;margin-right:15%;margin-top: 0px;margin-bottom: 0px;">-->
+<body
+	style="margin-left: 15%; margin-right: 15%; margin-top: 0px; margin-bottom: 0px;"></body>
+<!--<div style="overflow: hidden;background-color: #3B3B6F;padding: 40px;">
+    <img alt="alindintra.wintergreen.co.in" src="http://alindintra.wintergreen.co.in/AlindSalesUploadFiles/Logo/logo.JPG">
+</div>-->
+<!-- <div style="overflow: hidden;background-color: #5D73E5;padding: 50px;"> -->
+<div style="overflow: hidden; padding: 10px 5px;">
+	<!--  <div style="overflow: hidden;background-color: #FFFFFF;padding: 10px;border-radius: 4px;"> -->
+	<div
+		style="overflow: hidden; background-color: #ffffff; border-top: 4px solid #5D73E5; padding: 15px;">
+		<table>
+			<!--
+            <tr>
+                <td>
+                    <p align="center" style="font:italic bold 12px/30px Georgia, serif;" >Reset Password information</p>
+                </td>
+            </tr>-->
+			<tr>
+				<td>
+					<p align="left"
+						style="font: bold 12px/30px Verdana, Geneva, sans-serif; margin: 0;">
+						Dear <span
+							style="font: bold 15px/30px Arial, Helvetica, sans-serif;">
+							<span th:text="${callDetail.cdCustomerName}"></span>
+						</span> ,
+					</p>
+				</td>
+
+			</tr>
+			<tr>
+				<td>
+					<p align="left"
+						style="font: bold 12px/30px Verdana, Geneva, sans-serif; margin: 0;">
+						We have processed your service request with the SR ID : <span
+							style="color: blue; font: bold 15px/30px Arial, Helvetica, sans-serif;">
+							<span th:text="${callDetail.serviceRequestId}"></span>
+						</span> and assigned the work to our engineers.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align="left"
+						style="font: bold 12px/30px Verdana, Geneva, sans-serif; margin: 0;">
+						For further informations feel free to contact our men who will be
+						attending the work on your site</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p align="left"
+						style="font: bold 12px/30px Verdana, Geneva, sans-serif; margin: 0;">
+						<span
+							style="color: blue; font: bold 15px/30px Arial, Helvetica, sans-serif;">
+							Mr. <span th:text="${employee.fullNameEmp}"></span>, <span
+							th:text="${employee.primaryMobileNo}"></span>
+						</span>
+					</p>
+				</td>
+				<th:block th:each="emp : ${empList}">
+					<tr>
+						<td><span  th:text="${emp.slNo}"></span></td>
+						<td>Mr.
+						<span  th:text="${emp.fullNameEmp}"></span></td>
+					</tr>
+				</th:block>
+			</tr>
+			<tr>
+				<td>
+					<p>
+						<img width="375" src="emailSignature.jpg"
+							th:src="|cid:${imageResourceName}|" />
+					</p>
+				</td>
+			</tr>
+		</table>
+		<div>
+			<p align="center"
+				style="font: italic 10px/30px Georgia, serif; margin: 0">
+				<b>* This is a system generated email, Kindly do not reply.</b>
+			</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

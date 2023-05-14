@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-27T14:28:17 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Volunteer_In_study" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8ec04854-890d-43c3-946d-c1fa63153806">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="e7ca8249-bc7d-41cd-a16f-7e9fa457be8e">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="tDatLogin" class="java.lang.String">
+			<fieldDescription><![CDATA[sessionLog.sessionDetailReportList.tDatLogin]]></fieldDescription>
+		</field>
+		<field name="lastName" class="java.lang.String">
+			<fieldDescription><![CDATA[sessionLog.sessionDetailReportList.tableName]]></fieldDescription>
+		</field>
+		<field name="iPAddress" class="java.lang.String">
+			<fieldDescription><![CDATA[sessionLog.sessionDetailReportList.iPAddress]]></fieldDescription>
+		</field>
+		<field name="tableContents" class="java.lang.String">
+			<fieldDescription><![CDATA[sessionLog.sessionDetailReportList.tableContents]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="logoPath" class="java.lang.String">
+		<fieldDescription><![CDATA[sessionLog.logoPath]]></fieldDescription>
+	</field>
+	<field name="subDirctoryPath" class="java.lang.String">
+		<fieldDescription><![CDATA[sessionLog.subDirctoryPath]]></fieldDescription>
+	</field>
+	<field name="sessionLog" class="java.util.List">
+		<fieldDescription><![CDATA[sessionLog]]></fieldDescription>
+	</field>
+	<field name="sessionDetailReportList" class="java.util.List">
+		<fieldDescription><![CDATA[sessionLog.sessionDetailReportList]]></fieldDescription>
+	</field>
+	<field name="clientDetailsList" class="java.util.List">
+		<fieldDescription><![CDATA[sessionLog.clientDetailsList]]></fieldDescription>
+	</field>
+	<field name="fromDate" class="java.lang.String">
+		<fieldDescription><![CDATA[sessionLog.fromDate]]></fieldDescription>
+	</field>
+	<field name="toDate" class="java.lang.String">
+		<fieldDescription><![CDATA[sessionLog.toDate]]></fieldDescription>
+	</field>
+	<field name="firmName" class="java.lang.String">
+		<fieldDescription><![CDATA[sessionLog.firmName]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="138" splitType="Stretch">
+			<image>
+				<reportElement x="-2" y="0" width="112" height="91" uuid="5b42e572-cbd5-4b72-9b18-cfcef5eb44c3"/>
+				<imageExpression><![CDATA[$F{logoPath}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="200" y="0" width="138" height="35" uuid="9620c5a5-9713-437f-909c-7ef58e73a868"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIP CHECK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="29" width="187" height="32" forecolor="#330033" uuid="754f70c1-b1d0-4e5f-82a9-94686b7ea92f"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Company Session Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="47" width="46" height="20" uuid="a2d6cfa0-31c4-427f-8625-aad18bc55e68"/>
+				<text><![CDATA[Printed : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="104" y="47" width="62" height="20" uuid="f588b8e5-df40-4788-a2c2-55b21573e4d4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm.ss a">
+				<reportElement x="166" y="47" width="55" height="20" uuid="0d1239a3-a7ad-4102-9ca5-46f80342adf2"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="47" width="100" height="20" uuid="8cc5aacf-ae84-49dc-9218-f3b08ce6f88b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="457" y="46" width="75" height="20" uuid="891fc6b5-6b93-4af9-a6c1-c15ad7327769"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Page :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="71" width="133" height="20" forecolor="#330033" uuid="263090da-50de-46bb-9be3-6e29c3d9feab"/>
+				<textElement>
+					<font size="15" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Company Name :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="96" width="93" height="20" forecolor="#330033" uuid="bace22f6-f534-422b-8363-920cb57b7cac"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[From Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="98" width="93" height="20" forecolor="#330033" uuid="a4ebf5f5-6e14-45ba-ae76-bdf281c4de62"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[To Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="222" y="73" width="116" height="20" uuid="7653e3e3-0bd5-4509-bef1-cb3a85fba802"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firmName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="97" width="93" height="20" uuid="560b25ef-481c-4d07-9259-b0b51e931e7f"/>
+				<textFieldExpression><![CDATA[$F{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="97" width="93" height="20" uuid="10b325ce-659c-4e04-8f55-9d1ea6d48b9a"/>
+				<textFieldExpression><![CDATA[$F{toDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="380" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="120" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="145" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="-479" width="555" height="210" uuid="9d7d8742-352a-4ceb-9935-2a16c0ca545d"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{sessionDetailReportList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subDirctoryPath}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

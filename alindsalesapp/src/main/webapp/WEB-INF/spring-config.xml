@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+  http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/util 
+  http://www.springframework.org/schema/util/spring-util-3.2.xsd
+  http://www.springframework.org/schema/context 
+  http://www.springframework.org/schema/context/spring-context-3.2.xsd
+ http://www.springframework.org/schema/tx 
+ http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+
+	<context:component-scan base-package="com.yaz.alind" />
+	<mvc:annotation-driven />
+	
+	<!-- Swagger -->
+	<bean id="swagger2Config"
+		class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration">
+	</bean>
+	<mvc:resources order="1" location="/resources/" mapping="/resources/**" />
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**"
+		location="classpath:/META-INF/resources/webjars/" />
+	<mvc:default-servlet-handler />
+
+	<!-- Swagger Ends -->
+
+	<tx:annotation-driven transaction-manager="txManager" />
+
+
+	<!-- Thymeleaf email template support added -->
+	<bean id="templateResolver"
+		class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+		<property name="prefix" value="/WEB-INF/views/email/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML5" />
+	</bean>
+
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+	</bean>
+
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+	</bean>
+	<!-- Thymeleaf config end -->
+
+	<!-- Email Config -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="25" />
+		<property name="username" value="alind.yazata@yazataconsulting.com" />
+		<property name="password" value="alind1234" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.imaps.ssl.trust">*</prop>
+				<prop key="mail.smtp.sendpartial">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- Email Config End -->
+
+	<!-- File Uploading -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- setting maximum upload size <property name="maxUploadSize" value="100000" 
+			/> -->
+
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- -->
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		
+		<!-- Alind Production Server DB 
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" 
+			/> <property name="url" value="jdbc:mysql://localhost:3306/alindsal_pdn_190920" 
+			/> <property name="username" value="alindsal_salesappuser" /> <property name="password" 
+			value="A1i3Nd59leSAppD#" />-->
+		
+		<!-- Server Production DB OLD VPS
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" 
+			/> <property name="url" value="jdbc:mysql://localhost:3306/wintergr_pdn1209" 
+			/> <property name="username" value="wintergr_test" /> <property name="password" 
+			value="hcKGdnX8" />-->
+
+		<!-- For VPS <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" 
+			/> <property name="url" value="jdbc:mysql://localhost:3306/wintergr_alind" 
+			/> <property name="username" value="wintergr_test" /> <property name="password" 
+			value="hcKGdnX8" /> -->
+	</bean>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/db.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.yaz.alind.model.Employee</value>
+				<value>com.yaz.alind.model.Department</value>
+				<value>com.yaz.alind.model.TokenModel</value>
+				<value>com.yaz.alind.model.CallDetail</value>
+				<value>com.yaz.alind.model.ServiceReport</value>
+				<value>com.yaz.alind.model.Allot</value>
+				<value>com.yaz.alind.model.Role</value>
+				<value>com.yaz.alind.model.RelayDetails</value>
+				<value>com.yaz.alind.model.PanelDetails</value>
+				<value>com.yaz.alind.model.CustomerDetails</value>
+				<value>com.yaz.alind.model.PanelDetails</value>
+				<value>com.yaz.alind.model.BoardDivisionDetails</value>
+				<value>com.yaz.alind.model.AllottedEmployees</value>
+				<value>com.yaz.alind.model.ServiceAllotConnector</value>
+				<value>com.yaz.alind.model.NatureOfJobs</value>
+				<value>com.yaz.alind.model.ObservationBeforeMaintanence</value>
+				<value>com.yaz.alind.model.CustomerSiteDetails</value>
+				<value>com.yaz.alind.model.LatestRequestIds</value>
+				<value>com.yaz.alind.model.CallStatus</value>
+				<value>com.yaz.alind.model.MaterialRequest</value>
+				<value>com.yaz.alind.model.MaterialStockInfo</value>
+				<value>com.yaz.alind.model.RequestedItems</value>
+				<value>com.yaz.alind.model.DespatchedItems</value>
+				<value>com.yaz.alind.model.CourierServiceDetails</value>
+				<value>com.yaz.alind.model.DespatchDetails</value>
+				<value>com.yaz.alind.model.StatusInfo</value>
+				<value>com.yaz.alind.model.DespatchStatus</value>
+				<value>com.yaz.alind.model.ItemReceivedInfo</value>
+				<value>com.yaz.alind.model.AuditLog</value>
+				<value>com.yaz.alind.model.MaterialCategory</value>
+				<value>com.yaz.alind.model.ForgetPasswordModel</value>
+				<value>com.yaz.alind.model.DespatchReceivedStatus</value>
+				<value>com.yaz.alind.model.NatureOfJobsCallReg</value>
+				<value>com.yaz.alind.model.ServiceFile</value>
+				<!-- <value>com.yaz.alind.model.AccessLogs</value> <value>com.yaz.alind.model.AdminOption</value> 
+					<value>com.yaz.alind.model.EmployeeTypes</value> <value>com.yaz.alind.model.Migration</value> 
+					<value>com.yaz.alind.model.User</value> <value>com.yaz.alind.model.Upload</value> 
+					<value>com.yaz.alind.model.PasswordReset</value> -->
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect"> org.hibernate.dialect.MySQL5Dialect</prop>
+				<!--<prop key="hibernate.dialect"> org.hibernate.dialect.MySQLDialect</prop> 
+					<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.id.new_generator_mappings">false</prop>
+
+				<prop key="show_sql">true</prop>
+				<prop key="use_sql_comments">true</prop>
+				<!--<prop key="hibernate.show_sql">true</prop> <prop key="hibernate.current_session_context_class">thread</prop> 
+					<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory 
+					</prop> -->
+				<!-- enable second level cache and query cache <prop key="hibernate.cache.use_second_level_cache">true</prop> 
+					<prop key="hibernate.cache.use_query_cache">true</prop> <prop key="hibernate.jdbc.fetch_size">10000</prop> 
+					<prop key="keyhibernate.jdbc.batch_size">10000</prop> <prop key="show_sql">true</prop> 
+					<prop key="format_sql">true</prop> -->
+				<!-- <prop key="hibernate.order_inserts">true</prop> <prop key="hibernate.order_updates">true</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<!-- Configuring interceptors based on URI 
+	<mvc:interceptors>
+		<bean id="sessionHandlerContoller" class="com.yaz.alind.contoller.SessionHandlerContoller"></bean>
+	</mvc:interceptors>-->
+	
+	<!-- Configuring interceptors based on URI
+	<interceptors>
+		<interceptor>
+			<mapping path="/home" />
+			<beans:bean class="com.journaldev.spring.RequestProcessingTimeInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors> -->
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="userDAO" class="com.yaz.alind.dao.UserDAOImpl" />
+	<bean id="userService" class="com.yaz.alind.service.UserServiceImpl" />
+	
+	<bean id="utilDAO" class="com.yaz.alind.dao.UtilDAOImpl" />
+	<bean id="utilService" class="com.yaz.alind.service.UtilServiceImpl" />
+
+	<bean id="callManagementDAO" class="com.yaz.alind.dao.CallManagementDAOImpl" />
+	<bean id="callManagement" class="com.yaz.alind.service.CallManagementImpl" />
+
+	<bean id="materialRequestDAO" class="com.yaz.alind.dao.MaterialRequestDAOImpl" />
+	<bean id="materialRequestService" class="com.yaz.alind.service.MaterialRequestServiceImpl" />
+
+	<!-- Factory for Allot -->
+	<bean id="allotFactory" class="com.yaz.alind.model.AllotFactory" />
+	<bean id="allot" class="com.yaz.alind.model.Allot" factory-method="createAllot"
+		factory-bean="allotFactory" />
+
+	<!-- Factory for Allotted Employees -->
+	<bean id="allottedEmployeesFactory" class="com.yaz.alind.model.AllottedEmployeesFactory" />
+
+	<bean id="allottedEmployees" class="com.yaz.alind.model.AllottedEmployees"
+		factory-method="createAllottedEmployees" factory-bean="allottedEmployeesFactory" />
+
+	<!-- Factory for Service Report -->
+	<bean id="serviceReportFactory" class="com.yaz.alind.model.ServiceReportFactory" />
+	<bean id="serviceReport" class="com.yaz.alind.model.ServiceReport"
+		factory-method="createServiceReport" factory-bean="serviceReportFactory" />
+
+	<!-- Factory for ServiceAllotConnector -->
+	<bean id="serviceAllotConnectorFactory" class="com.yaz.alind.model.ServiceAllotConnectorFactory" />
+	<bean id="serviceAllotConnector" class="com.yaz.alind.model.ServiceAllotConnector"
+		factory-method="createServiceAllotConnector" factory-bean="serviceAllotConnectorFactory" />
+
+	<!-- Factory for EmployeeMinData -->
+	<bean id="employeeMinDataFactory" class="com.yaz.alind.model.EmployeeMinDataFactory" />
+	<bean id="employeeMinData" class="com.yaz.alind.model.EmployeeMinData"
+		factory-method="createEmployeeMinData" factory-bean="employeeMinDataFactory" />
+
+	<!-- Factory for MailModel -->
+	<bean id="mailModelFactory" class="com.yaz.alind.model.MailModelFactory" />
+	<bean id="mailModel" class="com.yaz.alind.model.MailModel"
+		factory-method="createMailModel" factory-bean="mailModelFactory" />
+
+	<!-- Factory for CallDetailUpdateDateSorting -->
+	<bean id="callDetailUpdateDateSortingFactory" class="com.yaz.alind.model.CallDetailUpdateDateSortingFactory" />
+	<bean id="callDetailUpdateDateSorting" class="com.yaz.alind.model.CallDetailUpdateDateSorting"
+		factory-method="createCallDetailUpdateDateSorting" factory-bean="callDetailUpdateDateSortingFactory" />
+
+	<!-- Factory for MaterialRequest -->
+	<bean id="materialRequestIntegraterFactory" class="com.yaz.alind.model.MaterialRequestIntegraterFactory" />
+	<bean id="materialRequestIntegrater" class="com.yaz.alind.model.MaterialRequestIntegrater"
+		factory-method="createMaterialRequestIntegrater" factory-bean="materialRequestIntegraterFactory" />
+		
+		<!-- Factory for DespatchDetailsIntegrator -->
+	<bean id="despatchDetailsIntegratorFactory" class="com.yaz.alind.model.DespatchDetailsIntegratorFactory" />
+	<bean id="despatchDetailsIntegrator" class="com.yaz.alind.model.DespatchDetailsIntegrator"
+		factory-method="createDespatchDetailsIntegrator" factory-bean="despatchDetailsIntegratorFactory" />
+		
+		<!-- Factory for MaterialRequest -->
+	<bean id="materialRequestFactory" class="com.yaz.alind.model.MaterialRequestFactory" />
+	<bean id="materialRequest" class="com.yaz.alind.model.MaterialRequest"
+		factory-method="createMaterialRequest" factory-bean="materialRequestFactory" />
+		
+		<!-- Factory for DespatchDetails -->
+	<bean id="despatchDetailsFactory" class="com.yaz.alind.model.DespatchDetailsFactory" />
+	<bean id="despatchDetails" class="com.yaz.alind.model.DespatchDetails"
+		factory-method="createDespatchDetails" factory-bean="despatchDetailsFactory" />
+		
+		<!-- Factory for ItemReceivedInfo -->
+	<bean id="itemReceivedInfoFactory" class="com.yaz.alind.model.ItemReceivedInfoFactory" />
+	<bean id="itemReceivedInfo" class="com.yaz.alind.model.ItemReceivedInfo"
+		factory-method="createItemReceivedInfo" factory-bean="itemReceivedInfoFactory" />
+		
+		<!-- Factory for AuditJson -->
+	<bean id="auditJsonFactory" class="com.yaz.alind.model.AuditJsonFactory" />
+	<bean id="auditJson" class="com.yaz.alind.model.AuditJson"
+		factory-method="createAuditJson" factory-bean="auditJsonFactory" />
+		
+		<!-- Factory for AuditJson -->
+	<bean id="auditLogFactory" class="com.yaz.alind.model.AuditLogFactory" />
+	<bean id="auditLog" class="com.yaz.alind.model.AuditLog"
+		factory-method="createAuditLog" factory-bean="auditLogFactory" />
+		
+		<!-- Factory for ForgetPasswordModel -->
+	<bean id="forgetPasswordFactory" class="com.yaz.alind.model.ForgetPasswordFactory" />
+	<bean id="forgetPasswordModel" class="com.yaz.alind.model.ForgetPasswordModel"
+		factory-method="createForgetPasswordModel" factory-bean="forgetPasswordFactory" />
+		
+		<!-- Factory for ServiceFile -->
+	<bean id="serviceFileFactory" class="com.yaz.alind.model.ServiceFileFactory" />
+	<bean id="serviceFile" class="com.yaz.alind.model.ServiceFile"
+		factory-method="createServiceFile" factory-bean="serviceFileFactory" />
+
+</beans>
